@@ -95,7 +95,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     self.outerEdgeBehavior = ZTSwipeCellEdgeBehaviorNone;
     self.animationDuration = .5f;
     self.imageMargin = 20;
-    self.switchMode = ZTSwipeCellSwitchModeFreezeImage;
+    self.switchMode = ZTSwipeCellSwitchModeNormal;
     self.overrideCancelWithEnd = NO;
     self.sliderView = self.contentView;
     
@@ -288,10 +288,33 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
          animations:^{
              if(mode == ZTSwipeCellModeSwitch) {
                  self.sliderView.frame = self.originalFrame;
-                 if(self.switchMode == ZTSwipeCellSwitchModelNormal && action && action.image) {
-                     CGRect rect = self.sliderImageView.frame;
-                     rect.origin.x = self.originalFrame.origin.x + self.imageMargin;
-                     self.sliderImageView.frame = rect;
+                 CGRect imgRect = self.sliderImageView.frame;
+                 if(action && action.image) {
+                     if(action.direction == ZTSwipeCellDirectionLeft) {
+                         switch (self.switchMode) {
+                             case ZTSwipeCellSwitchModeFreezeImage:
+                                 break;
+                             case ZTSwipeCellSwitchModeOrigin:
+                                 imgRect.origin.x = self.originalFrame.origin.x + self.imageMargin;
+                                 break;
+                             case ZTSwipeCellSwitchModeNormal:
+                                 imgRect.origin.x = self.originalFrame.origin.x - self.imageMargin - action.image.size.width;
+                                 break;
+                         }
+                     }
+                     else {
+                         switch (self.switchMode) {
+                             case ZTSwipeCellSwitchModeFreezeImage:
+                                 break;
+                             case ZTSwipeCellSwitchModeOrigin:
+                                 imgRect.origin.x = self.originalFrame.size.width - self.imageMargin - action.image.size.width;
+                                 break;
+                             case ZTSwipeCellSwitchModeNormal:
+                                 imgRect.origin.x = self.originalFrame.size.width + self.imageMargin;
+                                 break;
+                         }
+                     }
+                     self.sliderImageView.frame = imgRect;
                  }
              }
              else {
@@ -311,8 +334,10 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
          }
          completion:^(BOOL finished) {
              self.panGestureRecognizer.enabled = YES;
-             self.sliderView.hidden = YES;
-             self.sliderView.frame = self.originalFrame;
+             if(mode == ZTSwipeCellModeExit) {
+                 self.sliderView.hidden = YES;
+                 self.sliderView.frame = self.originalFrame;
+             }
              if(callback)
                  callback(finished);
          }];

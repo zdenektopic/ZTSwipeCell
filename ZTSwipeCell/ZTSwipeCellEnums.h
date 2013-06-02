@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, ZTSwipeCellMode) {
 
 typedef NS_ENUM(NSInteger, ZTSwipeCellSwitchMode) {
     ZTSwipeCellSwitchModeFreezeImage = 1,
-    ZTSwipeCellSwitchModelNormal = 2,
+    ZTSwipeCellSwitchModeNormal = 2,
+    ZTSwipeCellSwitchModeOrigin = 3
 };
 
 typedef NS_ENUM(NSInteger, ZTSwipeCellDirection) {
