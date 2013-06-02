@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		090A9B47175A8CB4006CFD28 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090A9B46175A8CB4006CFD28 /* CFNetwork.framework */; };
+		090A9B49175A9A45006CFD28 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090A9B48175A9A45006CFD28 /* QuartzCore.framework */; };
+		091E25E317241F9A00CFAC6B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091E25E217241F9A00CFAC6B /* UIKit.framework */; };
+		091E25E517241F9A00CFAC6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091E25E417241F9A00CFAC6B /* Foundation.framework */; };
+		091E25E717241F9A00CFAC6B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091E25E617241F9A00CFAC6B /* CoreGraphics.framework */; };
+		091E25ED17241F9A00CFAC6B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 091E25EB17241F9A00CFAC6B /* InfoPlist.strings */; };
+		091E25EF17241F9A00CFAC6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 091E25EE17241F9A00CFAC6B /* main.m */; };
+		091E25F317241F9A00CFAC6B /* ZTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 091E25F217241F9A00CFAC6B /* ZTAppDelegate.m */; };
+		091E25F517241F9A00CFAC6B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 091E25F417241F9A00CFAC6B /* Default.png */; };
+		091E25F717241F9A00CFAC6B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 091E25F617241F9A00CFAC6B /* Default@2x.png */; };
+		091E25F917241F9A00CFAC6B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 091E25F817241F9A00CFAC6B /* Default-568h@2x.png */; };
+		091E25FC17241F9A00CFAC6B /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091E25FA17241F9A00CFAC6B /* MainStoryboard.storyboard */; };
+		0930668E1742B930006E3618 /* ZTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0930668D1742B930006E3618 /* ZTViewController.m */; };
+		0930669B1742C96D006E3618 /* icon-cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 093066971742C96D006E3618 /* icon-cross.png */; };
+		0930669C1742C96D006E3618 /* icon-cross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 093066981742C96D006E3618 /* icon-cross@2x.png */; };
+		0930669D1742C96D006E3618 /* icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 093066991742C96D006E3618 /* icon-check.png */; };
+		0930669E1742C96D006E3618 /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0930669A1742C96D006E3618 /* icon-check@2x.png */; };
+		0962A250175AC322001AFC09 /* ZTSwipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0962A24C175AC322001AFC09 /* ZTSwipeCell.m */; };
+		0962A251175AC322001AFC09 /* ZTSwipeCellAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0962A24E175AC322001AFC09 /* ZTSwipeCellAction.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		090A9B44175A8C85006CFD28 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		090A9B46175A8CB4006CFD28 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		090A9B48175A9A45006CFD28 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		091E25DF17241F9A00CFAC6B /* ZTSwipeCellDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZTSwipeCellDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		091E25E217241F9A00CFAC6B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		091E25E417241F9A00CFAC6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		091E25E617241F9A00CFAC6B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		091E25EA17241F9A00CFAC6B /* ZTSwipeCellDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ZTSwipeCellDemo-Info.plist"; sourceTree = "<group>"; };
+		091E25EC17241F9A00CFAC6B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		091E25EE17241F9A00CFAC6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		091E25F017241F9A00CFAC6B /* ZTSwipeCellDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZTSwipeCellDemo-Prefix.pch"; sourceTree = "<group>"; };
+		091E25F117241F9A00CFAC6B /* ZTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZTAppDelegate.h; sourceTree = "<group>"; };
+		091E25F217241F9A00CFAC6B /* ZTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZTAppDelegate.m; sourceTree = "<group>"; };
+		091E25F417241F9A00CFAC6B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		091E25F617241F9A00CFAC6B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		091E25F817241F9A00CFAC6B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		091E25FB17241F9A00CFAC6B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		0930668C1742B930006E3618 /* ZTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTViewController.h; sourceTree = "<group>"; };
+		0930668D1742B930006E3618 /* ZTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTViewController.m; sourceTree = "<group>"; };
+		093066971742C96D006E3618 /* icon-cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cross.png"; sourceTree = "<group>"; };
+		093066981742C96D006E3618 /* icon-cross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cross@2x.png"; sourceTree = "<group>"; };
+		093066991742C96D006E3618 /* icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check.png"; sourceTree = "<group>"; };
+		0930669A1742C96D006E3618 /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
+		0962A24B175AC322001AFC09 /* ZTSwipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTSwipeCell.h; sourceTree = "<group>"; };
+		0962A24C175AC322001AFC09 /* ZTSwipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTSwipeCell.m; sourceTree = "<group>"; };
+		0962A24D175AC322001AFC09 /* ZTSwipeCellAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTSwipeCellAction.h; sourceTree = "<group>"; };
+		0962A24E175AC322001AFC09 /* ZTSwipeCellAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTSwipeCellAction.m; sourceTree = "<group>"; };
+		0962A24F175AC322001AFC09 /* ZTSwipeCellEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTSwipeCellEnums.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		091E25DC17241F9A00CFAC6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				090A9B49175A9A45006CFD28 /* QuartzCore.framework in Frameworks */,
+				090A9B47175A8CB4006CFD28 /* CFNetwork.framework in Frameworks */,
+				091E25E317241F9A00CFAC6B /* UIKit.framework in Frameworks */,
+				091E25E517241F9A00CFAC6B /* Foundation.framework in Frameworks */,
+				091E25E717241F9A00CFAC6B /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		091E25D617241F9A00CFAC6B = {
+			isa = PBXGroup;
+			children = (
+				091E25E817241F9A00CFAC6B /* ZTSwipeCellDemo */,
+				091E25E117241F9A00CFAC6B /* Frameworks */,
+				091E25E017241F9A00CFAC6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		091E25E017241F9A00CFAC6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				091E25DF17241F9A00CFAC6B /* ZTSwipeCellDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		091E25E117241F9A00CFAC6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				090A9B48175A9A45006CFD28 /* QuartzCore.framework */,
+				090A9B46175A8CB4006CFD28 /* CFNetwork.framework */,
+				090A9B44175A8C85006CFD28 /* CoreFoundation.framework */,
+				091E25E217241F9A00CFAC6B /* UIKit.framework */,
+				091E25E417241F9A00CFAC6B /* Foundation.framework */,
+				091E25E617241F9A00CFAC6B /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		091E25E817241F9A00CFAC6B /* ZTSwipeCellDemo */ = {
+			isa = PBXGroup;
+			children = (
+				0962A24A175AC322001AFC09 /* ZTSwipeCell */,
+				091E25F117241F9A00CFAC6B /* ZTAppDelegate.h */,
+				091E25F217241F9A00CFAC6B /* ZTAppDelegate.m */,
+				091E25FA17241F9A00CFAC6B /* MainStoryboard.storyboard */,
+				091E25E917241F9A00CFAC6B /* Supporting Files */,
+				0930668C1742B930006E3618 /* ZTViewController.h */,
+				0930668D1742B930006E3618 /* ZTViewController.m */,
+				093066971742C96D006E3618 /* icon-cross.png */,
+				093066981742C96D006E3618 /* icon-cross@2x.png */,
+				093066991742C96D006E3618 /* icon-check.png */,
+				0930669A1742C96D006E3618 /* icon-check@2x.png */,
+			);
+			path = ZTSwipeCellDemo;
+			sourceTree = "<group>";
+		};
+		091E25E917241F9A00CFAC6B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				091E25EA17241F9A00CFAC6B /* ZTSwipeCellDemo-Info.plist */,
+				091E25EB17241F9A00CFAC6B /* InfoPlist.strings */,
+				091E25EE17241F9A00CFAC6B /* main.m */,
+				091E25F017241F9A00CFAC6B /* ZTSwipeCellDemo-Prefix.pch */,
+				091E25F417241F9A00CFAC6B /* Default.png */,
+				091E25F617241F9A00CFAC6B /* Default@2x.png */,
+				091E25F817241F9A00CFAC6B /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0962A24A175AC322001AFC09 /* ZTSwipeCell */ = {
+			isa = PBXGroup;
+			children = (
+				0962A24B175AC322001AFC09 /* ZTSwipeCell.h */,
+				0962A24C175AC322001AFC09 /* ZTSwipeCell.m */,
+				0962A24D175AC322001AFC09 /* ZTSwipeCellAction.h */,
+				0962A24E175AC322001AFC09 /* ZTSwipeCellAction.m */,
+				0962A24F175AC322001AFC09 /* ZTSwipeCellEnums.h */,
+			);
+			name = ZTSwipeCell;
+			path = ../../ZTSwipeCell;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		091E25DE17241F9A00CFAC6B /* ZTSwipeCellDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 091E260217241F9A00CFAC6B /* Build configuration list for PBXNativeTarget "ZTSwipeCellDemo" */;
+			buildPhases = (
+				091E25DB17241F9A00CFAC6B /* Sources */,
+				091E25DC17241F9A00CFAC6B /* Frameworks */,
+				091E25DD17241F9A00CFAC6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZTSwipeCellDemo;
+			productName = ZTSwipeCellDemo;
+			productReference = 091E25DF17241F9A00CFAC6B /* ZTSwipeCellDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		091E25D717241F9A00CFAC6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ZT;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Zdenek Topic";
+			};
+			buildConfigurationList = 091E25DA17241F9A00CFAC6B /* Build configuration list for PBXProject "ZTSwipeCellDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 091E25D617241F9A00CFAC6B;
+			productRefGroup = 091E25E017241F9A00CFAC6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				091E25DE17241F9A00CFAC6B /* ZTSwipeCellDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		091E25DD17241F9A00CFAC6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				091E25ED17241F9A00CFAC6B /* InfoPlist.strings in Resources */,
+				091E25F517241F9A00CFAC6B /* Default.png in Resources */,
+				091E25F717241F9A00CFAC6B /* Default@2x.png in Resources */,
+				091E25F917241F9A00CFAC6B /* Default-568h@2x.png in Resources */,
+				091E25FC17241F9A00CFAC6B /* MainStoryboard.storyboard in Resources */,
+				0930669B1742C96D006E3618 /* icon-cross.png in Resources */,
+				0930669C1742C96D006E3618 /* icon-cross@2x.png in Resources */,
+				0930669D1742C96D006E3618 /* icon-check.png in Resources */,
+				0930669E1742C96D006E3618 /* icon-check@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		091E25DB17241F9A00CFAC6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				091E25EF17241F9A00CFAC6B /* main.m in Sources */,
+				091E25F317241F9A00CFAC6B /* ZTAppDelegate.m in Sources */,
+				0930668E1742B930006E3618 /* ZTViewController.m in Sources */,
+				0962A250175AC322001AFC09 /* ZTSwipeCell.m in Sources */,
+				0962A251175AC322001AFC09 /* ZTSwipeCellAction.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		091E25EB17241F9A00CFAC6B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				091E25EC17241F9A00CFAC6B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		091E25FA17241F9A00CFAC6B /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				091E25FB17241F9A00CFAC6B /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		091E260017241F9A00CFAC6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		091E260117241F9A00CFAC6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		091E260317241F9A00CFAC6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZTSwipeCellDemo/ZTSwipeCellDemo-Prefix.pch";
+				INFOPLIST_FILE = "ZTSwipeCellDemo/ZTSwipeCellDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		091E260417241F9A00CFAC6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ZTSwipeCellDemo/ZTSwipeCellDemo-Prefix.pch";
+				INFOPLIST_FILE = "ZTSwipeCellDemo/ZTSwipeCellDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		091E25DA17241F9A00CFAC6B /* Build configuration list for PBXProject "ZTSwipeCellDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				091E260017241F9A00CFAC6B /* Debug */,
+				091E260117241F9A00CFAC6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		091E260217241F9A00CFAC6B /* Build configuration list for PBXNativeTarget "ZTSwipeCellDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				091E260317241F9A00CFAC6B /* Debug */,
+				091E260417241F9A00CFAC6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 091E25D717241F9A00CFAC6B /* Project object */;
+}
