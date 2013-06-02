@@ -26,6 +26,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 
 @property (nonatomic, weak) ZTSwipeCellAction* current;
+@property (nonatomic, assign) ZTSwipeCellDirection lastDir;
 
 @property (nonatomic, strong) ZTSwipeCellAnimationCallback animCallback;
 
@@ -39,10 +40,10 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 - (ZTSwipeCellDirection)directionWithTranslation:(CGPoint)translation;
 
 - (ZTSwipeCellAction*)actionWithPercentage:(CGFloat)percent inDirection:(ZTSwipeCellDirection)direction;
-- (void)findTopsBottoms;
+- (void)findTopsBottoms; // Thats not a sex thing. I swear!
 
 - (void)updateForAction:(ZTSwipeCellAction*)action translation:(CGPoint)translation;
-- (void)prepapreSliderBackground;
+- (void)prepareSliderBackground;
 
 - (void)tryNotifyDelagatePossibleAction:(ZTSwipeCellAction*)action previous:(ZTSwipeCellAction*)previous;
 - (void)tryNotifyDelagateWillTriggerAction:(ZTSwipeCellAction *)action;
@@ -95,7 +96,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     self.outerEdgeBehavior = ZTSwipeCellEdgeBehaviorNone;
     self.animationDuration = .5f;
     self.imageMargin = 20;
-    self.switchMode = ZTSwipeCellSwitchModeNormal;
+    self.switchMode = ZTSwipeCellSwitchModeOrigin;
     self.overrideCancelWithEnd = NO;
     self.sliderView = self.contentView;
     
@@ -125,8 +126,11 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
             [self findTopsBottoms];
             [self tryNotifyDelagateDidBeginSwipe];
             self.originalFrame = self.sliderView.frame;
-            [self prepapreSliderBackground];
+            [self prepareSliderBackground];
         case UIGestureRecognizerStateChanged:
+            if(direction != self.lastDir)
+                [self tryNotifyDelagateDidChangeDirection:direction];
+            self.lastDir = direction;
             [self updateForAction:action translation:translation];
             if(action != self.current) {
                 [self tryNotifyDelagatePossibleAction:action previous:self.current];
@@ -227,7 +231,6 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
         }
         
         self.sliderImageView.frame = tmp;
-        NSLog(@"%@", NSStringFromCGRect(rect));
     }
     else {
         self.sliderImageView.image = nil;
@@ -241,7 +244,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
         self.sliderBackgroundView.backgroundColor = nil;
 }
 
-- (void)prepapreSliderBackground
+- (void)prepareSliderBackground
 {
     if(!self.sliderBackgroundView)
         self.sliderBackgroundView = [UIView new];
@@ -334,6 +337,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
          }
          completion:^(BOOL finished) {
              self.panGestureRecognizer.enabled = YES;
+             self.sliderImageView.hidden = YES;
              if(mode == ZTSwipeCellModeExit) {
                  self.sliderView.hidden = YES;
                  self.sliderView.frame = self.originalFrame;
@@ -454,13 +458,13 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     switch(action.direction) {
         case ZTSwipeCellDirectionLeft:
             if([self.leftActions filteredArrayUsingPredicate:p].count > 0)
-                NSLog(@"Cell already contains action for left side with %f. Cell was not added!", action.percent);
+                NSLog(@"Cell already contains action for left side with %f percent. Cell was not added!", action.percent);
             else
                 [self.leftActions addObject:action];
             break;
         case ZTSwipeCellDirectionRight:
             if([self.rightActions filteredArrayUsingPredicate:p].count > 0)
-                NSLog(@"Cell already contains action for right side with %f. Cell was not added!", action.percent);
+                NSLog(@"Cell already contains action for right side with %f percent. Cell was not added!", action.percent);\
             else
                 [self.rightActions addObject:action];
             break;

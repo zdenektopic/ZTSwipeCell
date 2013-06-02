@@ -9,7 +9,7 @@
 #import "ZTViewController.h"
 #import "ZTSwipeCell.h"
 
-@interface ZTViewController ()
+@interface ZTViewController () <ZTSwipeCellDelegate>
 
 @end
 
@@ -99,7 +99,39 @@
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.backgroundView.backgroundColor = [UIColor blackColor];
     
+    cell.delegate = self;
+    
     return cell;
+}
+
+- (void)swipeCell:(ZTSwipeCell *)cell didChangeDirection:(ZTSwipeCellDirection)direction
+{
+    NSLog(@"Changed direction: %d", direction);
+}
+
+- (void)swipeCell:(ZTSwipeCell *)cell possibleAction:(ZTSwipeCellAction *)action previous:(ZTSwipeCellAction *)previous
+{
+    NSLog(@"Possible action %@, previous %@", action, previous);
+}
+
+- (void)swipeCellDidBeginSwipe:(ZTSwipeCell *)cell
+{
+    NSLog(@"Did begin swipe");
+}
+
+- (void)swipeCellDidEndSwipe:(ZTSwipeCell *)cell success:(BOOL)success
+{
+    NSLog(@"Did end swipe: %c", success);
+}
+
+- (void)swipeCell:(ZTSwipeCell *)cell willTriggerAction:(ZTSwipeCellAction *)action
+{
+    NSLog(@"Will trigger action %@", action);
+}
+
+- (void)swipeCell:(ZTSwipeCell *)cell didTriggerAction:(ZTSwipeCellAction *)action
+{
+    NSLog(@"Did trigger action %@", action);
 }
 
 /*

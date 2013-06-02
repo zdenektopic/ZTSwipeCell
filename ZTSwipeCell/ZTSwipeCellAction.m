@@ -25,4 +25,9 @@
     return self;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"[%f; %d]", self.percent, self.direction];
+}
+
 @end
