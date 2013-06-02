@@ -113,7 +113,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (void)handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
 {
-    if(self.sliderView.hidden)
+    if(!self.sliderView || self.sliderView.hidden)
         return;
     CGPoint translation = [gesture translationInView:self];
     ZTSwipeCellDirection direction = [self directionWithTranslation:translation];
