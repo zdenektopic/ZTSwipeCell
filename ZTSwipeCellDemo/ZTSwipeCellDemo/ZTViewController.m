@@ -59,6 +59,16 @@
     cell.textLabel.text = @"test";
     cell.detailTextLabel.text = @"test";
     
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.backgroundView.backgroundColor = [UIColor blackColor];
+    
+    cell.delegate = self;
+    
+    return cell;
+}
+
+- (NSArray *)actionsForSwipeCell:(ZTSwipeCell *)cell
+{
     ZTSwipeCellAction* action = [[ZTSwipeCellAction alloc]
                                  initWithPercent:0.2
                                  direction:ZTSwipeCellDirectionLeft
@@ -68,20 +78,20 @@
                                  tag:nil];
     
     ZTSwipeCellAction* action1 = [[ZTSwipeCellAction alloc]
-                                 initWithPercent:0.5
-                                 direction:ZTSwipeCellDirectionLeft
-                                 color:[UIColor redColor]
-                                 image:[UIImage imageNamed:@"icon-cross"]
-                                 mode:ZTSwipeCellModeExit
-                                 tag:nil];
+                                  initWithPercent:0.5
+                                  direction:ZTSwipeCellDirectionLeft
+                                  color:[UIColor redColor]
+                                  image:[UIImage imageNamed:@"icon-cross"]
+                                  mode:ZTSwipeCellModeExit
+                                  tag:nil];
     
     ZTSwipeCellAction* action2 = [[ZTSwipeCellAction alloc]
-                                 initWithPercent:0.2
-                                 direction:ZTSwipeCellDirectionRight
-                                 color:[UIColor yellowColor]
-                                 image:[UIImage imageNamed:@"icon-check"]
-                                 mode:ZTSwipeCellModeExit
-                                 tag:nil];
+                                  initWithPercent:0.2
+                                  direction:ZTSwipeCellDirectionRight
+                                  color:[UIColor yellowColor]
+                                  image:[UIImage imageNamed:@"icon-check"]
+                                  mode:ZTSwipeCellModeExit
+                                  tag:nil];
     
     ZTSwipeCellAction* action3 = [[ZTSwipeCellAction alloc]
                                   initWithPercent:0.5
@@ -90,18 +100,7 @@
                                   image:[UIImage imageNamed:@"icon-cross"]
                                   mode:ZTSwipeCellModeSwitch
                                   tag:nil];
-    
-    //[cell addAction:action];
-    [cell addAction:action1];
-    [cell addAction:action2];
-    [cell addAction:action3];
-    
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    cell.backgroundView.backgroundColor = [UIColor blackColor];
-    
-    cell.delegate = self;
-    
-    return cell;
+    return @[action, action1, action2, action3];
 }
 
 - (void)swipeCell:(ZTSwipeCell *)cell didChangeDirection:(ZTSwipeCellDirection)direction
