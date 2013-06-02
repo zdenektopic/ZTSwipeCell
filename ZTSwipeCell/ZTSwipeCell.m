@@ -39,7 +39,11 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (ZTSwipeCellDirection)directionWithTranslation:(CGPoint)translation;
 
+- (void)_addAction:(ZTSwipeCellAction*)action;
+- (void)_addActions:(NSArray*)actions;
 - (ZTSwipeCellAction*)actionWithPercentage:(CGFloat)percent inDirection:(ZTSwipeCellDirection)direction;
+- (NSArray*)delegateGetActions;
+- (void)setupActions;
 - (void)findTopsBottoms; // Thats not a sex thing. I swear!
 
 - (void)updateForAction:(ZTSwipeCellAction*)action translation:(CGPoint)translation;
@@ -53,6 +57,8 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 - (void)tryNotifyDelagateDidChangeDirection:(ZTSwipeCellDirection)direction;
 
 - (void)animateAction:(ZTSwipeCellAction*)action completion:(ZTSwipeCellAnimationCallback)callback;
+
+- (void)resetSwipeCell;
 
 
 @end
@@ -96,7 +102,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     self.outerEdgeBehavior = ZTSwipeCellEdgeBehaviorNone;
     self.animationDuration = .2f;
     self.imageMargin = 20;
-    self.switchMode = ZTSwipeCellSwitchModeOrigin;
+    self.switchMode = ZTSwipeCellSwitchModeFreezeImage;
     self.overrideCancelWithEnd = NO;
     self.sliderView = self.contentView;
     
@@ -120,7 +126,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
     switch(gesture.state) {
         case UIGestureRecognizerStateBegan:
-            self.current = nil;
+            [self setupActions];
             [self findTopsBottoms];
             [self tryNotifyDelagateDidBeginSwipe];
             self.sliderOriginalFrame = self.sliderView.frame;
@@ -247,7 +253,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     if(!self.sliderBackgroundView)
         self.sliderBackgroundView = [UIView new];
     self.sliderBackgroundView.frame = self.sliderOriginalFrame;
-    self.sliderBackgroundView.backgroundColor = [UIColor clearColor];
+    self.sliderBackgroundView.backgroundColor = nil;
     if(self.sliderBackgroundView.superview)
         [self.sliderBackgroundView removeFromSuperview];
     [self.sliderView.superview insertSubview:self.sliderBackgroundView belowSubview:self.sliderView];
@@ -265,13 +271,28 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
         [self tryNotifyDelagateWillTriggerAction:action];
     [self animateAction:action completion:^(BOOL finished) {
         [self tryNotifyDelagateDidTriggerAction:action];
+        [self resetSwipeCell];
     }];
 }
 
 - (void)cancelWithAction:(ZTSwipeCellAction *)action
 {
     [self tryNotifyDelagateDidEndSwipeSuccess:NO];
-    [self animateAction:action completion:0];
+    [self animateAction:action completion:^(BOOL finished) {
+        [self resetSwipeCell];
+    }];
+}
+
+- (void)resetSwipeCell
+{
+    [self.rightActions removeAllObjects];
+    [self.leftActions removeAllObjects];
+    self.leftBottomAction = nil;
+    self.leftTopAction = nil;
+    self.rightBottomAction = nil;
+    self.rightTopAction = nil;
+    self.current = nil;
+    self.lastDirection = 0;
 }
 
 #pragma mark - Animations
@@ -377,6 +398,14 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 */
 #pragma mark - Delegate notifications
 
+- (NSArray*)delegateGetActions
+{
+    if(!self.delegate)
+        return [NSArray new];
+    //[self.delegate ac
+    return [self.delegate actionsForSwipeCell:self];
+}
+
 - (void)tryNotifyDelagatePossibleAction:(ZTSwipeCellAction *)action previous:(ZTSwipeCellAction *)previous
 {
     if(self.delegate && [self.delegate respondsToSelector:@selector(swipeCell:possibleAction:previous:)])
@@ -429,6 +458,12 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 #pragma mark - Managing actions
 
+- (void)setupActions
+{
+    NSArray* arr = [self delegateGetActions];
+    [self _addActions:arr];
+}
+
 - (ZTSwipeCellDirection)directionWithTranslation:(CGPoint)translation
 {
     ZTSwipeCellDirection direction = ZTSwipeCellDirectionCenter;
@@ -450,7 +485,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     return act;
 }
 
-- (void)addAction:(ZTSwipeCellAction*)action
+- (void)_addAction:(ZTSwipeCellAction*)action
 {
     NSPredicate* p = [NSPredicate predicateWithFormat:@"percent = %f", action.percent];
     
@@ -471,32 +506,11 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     }
 }
 
-- (void)addActions:(NSArray*)actions
+- (void)_addActions:(NSArray*)actions
 {
     for (ZTSwipeCellAction* action in actions) {
-        [self addAction:action];
+        [self _addAction:action];
     }
-}
-
-- (BOOL)removeAction:(ZTSwipeCellAction*)action
-{
-    switch(action.direction) {
-        case ZTSwipeCellDirectionLeft:
-            if([self.leftActions containsObject:action]) {
-                [self.leftActions removeObject:action];
-                return YES;
-            }
-            break;
-        case ZTSwipeCellDirectionRight:
-            if([self.rightActions containsObject:action]) {
-                [self.rightActions removeObject:action];
-                return YES;
-            }
-            break;
-        default:
-            return NO;
-    }
-    return NO;
 }
 
 - (void)findTopsBottoms
@@ -508,14 +522,6 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     tmp = [self.rightActions sortedArrayUsingDescriptors:@[sort]];
     self.rightTopAction = tmp.count > 0 ? tmp[0] : nil;
     self.rightBottomAction = tmp.count > 0 ? [tmp lastObject] : nil;
-}
-
-- (NSArray*)actions
-{
-    NSMutableArray* arr = [NSMutableArray new];
-    [arr addObjectsFromArray:self.leftActions];
-    [arr addObjectsFromArray:self.rightActions];
-    return [NSArray arrayWithArray:arr];
 }
 
 @end

@@ -13,6 +13,8 @@
 
 @protocol ZTSwipeCellDelegate <NSObject>
 
+- (NSArray*)actionsForSwipeCell:(ZTSwipeCell*)cell;
+
 @optional
 - (void)swipeCell:(ZTSwipeCell*)cell possibleAction:(ZTSwipeCellAction*)action previous:(ZTSwipeCellAction*)previous;
 - (void)swipeCell:(ZTSwipeCell *)cell willTriggerAction:(ZTSwipeCellAction*)action;
@@ -25,7 +27,6 @@
 
 @interface ZTSwipeCell : UITableViewCell
 
-@property (nonatomic, copy, readonly) NSArray* actions;
 @property (nonatomic, strong) UIView* sliderView;
 @property (nonatomic, assign) id<ZTSwipeCellDelegate> delegate;
 @property (nonatomic, assign) BOOL overrideCancelWithEnd;
@@ -35,9 +36,5 @@
 @property (nonatomic, assign) CGFloat imageMargin;
 
 @property (nonatomic, assign) enum ZTSwipeCellSwitchMode switchMode;
-
-- (void)addAction:(ZTSwipeCellAction*)action;
-- (void)addActions:(NSArray*)actions;
-- (BOOL)removeAction:(ZTSwipeCellAction*)action;
 
 @end
