@@ -20,15 +20,15 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 @property (nonatomic, strong) ZTSwipeCellAction* rightTopAction;
 @property (nonatomic, strong) ZTSwipeCellAction* rightBottomAction;
 
-@property (nonatomic, assign) CGRect originalFrame;
+@property (nonatomic, assign) CGRect sliderOriginalFrame;
 @property (nonatomic, strong) UIView* sliderBackgroundView;
 @property (nonatomic, strong) UIImageView* sliderImageView;
-@property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer* swipeCellPanGestureRecognizer;
 
 @property (nonatomic, weak) ZTSwipeCellAction* current;
-@property (nonatomic, assign) ZTSwipeCellDirection lastDir;
+@property (nonatomic, assign) ZTSwipeCellDirection lastDirection;
 
-@property (nonatomic, strong) ZTSwipeCellAnimationCallback animCallback;
+//@property (nonatomic, strong) ZTSwipeCellAnimationCallback animationCallback;
 
 - (void)initializer;
 
@@ -103,18 +103,16 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     self.leftActions = [NSMutableArray new];
     self.rightActions = [NSMutableArray new];
     
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestureRecognizer:)];
-    self.panGestureRecognizer.maximumNumberOfTouches = 1;
-    [self addGestureRecognizer:self.panGestureRecognizer];
-    self.panGestureRecognizer.delegate = self;
+    self.swipeCellPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestureRecognizer:)];
+    self.swipeCellPanGestureRecognizer.maximumNumberOfTouches = 1;
+    [self addGestureRecognizer:self.swipeCellPanGestureRecognizer];
+    self.swipeCellPanGestureRecognizer.delegate = self;
 }
 
 #pragma mark - Handle Gestures
 
 - (void)handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
 {
-    if(!self.sliderView || self.sliderView.hidden)
-        return;
     CGPoint translation = [gesture translationInView:self];
     ZTSwipeCellDirection direction = [self directionWithTranslation:translation];
     CGFloat percent = fabsf(translation.x) / self.frame.size.width;
@@ -125,12 +123,12 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
             self.current = nil;
             [self findTopsBottoms];
             [self tryNotifyDelagateDidBeginSwipe];
-            self.originalFrame = self.sliderView.frame;
+            self.sliderOriginalFrame = self.sliderView.frame;
             [self prepareSliderBackground];
         case UIGestureRecognizerStateChanged:
-            if(direction != self.lastDir)
+            if(direction != self.lastDirection)
                 [self tryNotifyDelagateDidChangeDirection:direction];
-            self.lastDir = direction;
+            self.lastDirection = direction;
             [self updateForAction:action translation:translation];
             if(action != self.current) {
                 [self tryNotifyDelagatePossibleAction:action previous:self.current];
@@ -248,7 +246,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 {
     if(!self.sliderBackgroundView)
         self.sliderBackgroundView = [UIView new];
-    self.sliderBackgroundView.frame = self.originalFrame;
+    self.sliderBackgroundView.frame = self.sliderOriginalFrame;
     self.sliderBackgroundView.backgroundColor = [UIColor clearColor];
     if(self.sliderBackgroundView.superview)
         [self.sliderBackgroundView removeFromSuperview];
@@ -280,7 +278,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (void)animateAction:(ZTSwipeCellAction *)action completion:(ZTSwipeCellAnimationCallback)callback
 {
-    self.panGestureRecognizer.enabled = NO;
+    self.swipeCellPanGestureRecognizer.enabled = NO;
     ZTSwipeCellMode mode = action ? action.mode : ZTSwipeCellModeSwitch;
     UIViewAnimationOptions curve = mode == ZTSwipeCellModeExit ? UIViewAnimationOptionCurveLinear : UIViewAnimationOptionCurveEaseOut;
     if(mode != ZTSwipeCellModeSwitchWithBounce) {
@@ -290,7 +288,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
          options:curve
          animations:^{
              if(mode == ZTSwipeCellModeSwitch) {
-                 self.sliderView.frame = self.originalFrame;
+                 self.sliderView.frame = self.sliderOriginalFrame;
                  CGRect imgRect = self.sliderImageView.frame;
                  if(action && action.image) {
                      if(action.direction == ZTSwipeCellDirectionLeft) {
@@ -298,10 +296,10 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
                              case ZTSwipeCellSwitchModeFreezeImage:
                                  break;
                              case ZTSwipeCellSwitchModeOrigin:
-                                 imgRect.origin.x = self.originalFrame.origin.x + self.imageMargin;
+                                 imgRect.origin.x = self.sliderOriginalFrame.origin.x + self.imageMargin;
                                  break;
                              case ZTSwipeCellSwitchModeNormal:
-                                 imgRect.origin.x = self.originalFrame.origin.x - self.imageMargin - action.image.size.width;
+                                 imgRect.origin.x = self.sliderOriginalFrame.origin.x - self.imageMargin - action.image.size.width;
                                  break;
                          }
                      }
@@ -310,10 +308,10 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
                              case ZTSwipeCellSwitchModeFreezeImage:
                                  break;
                              case ZTSwipeCellSwitchModeOrigin:
-                                 imgRect.origin.x = self.originalFrame.size.width - self.imageMargin - action.image.size.width;
+                                 imgRect.origin.x = self.sliderOriginalFrame.size.width - self.imageMargin - action.image.size.width;
                                  break;
                              case ZTSwipeCellSwitchModeNormal:
-                                 imgRect.origin.x = self.originalFrame.size.width + self.imageMargin;
+                                 imgRect.origin.x = self.sliderOriginalFrame.size.width + self.imageMargin;
                                  break;
                          }
                      }
@@ -336,11 +334,11 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
              }
          }
          completion:^(BOOL finished) {
-             self.panGestureRecognizer.enabled = YES;
+             self.swipeCellPanGestureRecognizer.enabled = YES;
              self.sliderImageView.hidden = YES;
              if(mode == ZTSwipeCellModeExit) {
                  self.sliderView.hidden = YES;
-                 self.sliderView.frame = self.originalFrame;
+                 self.sliderView.frame = self.sliderOriginalFrame;
              }
              if(callback)
                  callback(finished);
@@ -366,16 +364,17 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     }
 }
 
+/*
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     if(anim == [self.sliderView.layer animationForKey:@"ZTSwipeCellModeSwitchWithBounce"] && flag) {
         self.userInteractionEnabled = YES;
-        if(self.animCallback)
-            self.animCallback(flag);
-        self.animCallback = nil;
+        if(self.animationCallback)
+            self.animationCallback(flag);
+        self.animationCallback = nil;
     }
 }
-
+*/
 #pragma mark - Delegate notifications
 
 - (void)tryNotifyDelagatePossibleAction:(ZTSwipeCellAction *)action previous:(ZTSwipeCellAction *)previous
@@ -418,9 +417,11 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (gestureRecognizer.class == [UIPanGestureRecognizer class]) {
-        UIPanGestureRecognizer *g = (UIPanGestureRecognizer *)gestureRecognizer;
-        CGPoint point = [g velocityInView:self];
+    if (gestureRecognizer == self.swipeCellPanGestureRecognizer) {
+        if(!self.sliderView || self.sliderView.hidden) {
+            return NO;
+        }
+        CGPoint point = [self.swipeCellPanGestureRecognizer velocityInView:self];
         return fabsf(point.x) > fabsf(point.y);
     }
     return YES;
