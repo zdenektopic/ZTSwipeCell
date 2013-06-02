@@ -112,6 +112,8 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (void)handlePanGestureRecognizer:(UIPanGestureRecognizer *)gesture
 {
+    if(self.sliderView.hidden)
+        return;
     CGPoint translation = [gesture translationInView:self];
     ZTSwipeCellDirection direction = [self directionWithTranslation:translation];
     CGFloat percent = fabsf(translation.x) / self.frame.size.width;
@@ -127,12 +129,12 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
         case UIGestureRecognizerStateChanged:
             [self updateForAction:action translation:translation];
             if(action != self.current) {
-               [self tryNotifyDelagatePossibleAction:action previous:self.current];
+                [self tryNotifyDelagatePossibleAction:action previous:self.current];
                 self.current = action;
             } break;
         case UIGestureRecognizerStateCancelled:
             if(action && self.overrideCancelWithEnd)
-               [self triggerAction:action];
+                [self triggerAction:action];
             else
                 [self cancelWithAction:action];
             break;
@@ -206,8 +208,13 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
         tmp.size.width = img.size.width;
         tmp.size.height = img.size.height;
         tmp.origin.y = self.sliderBackgroundView.frame.size.height / 2 - img.size.height / 2;
+        
         if(dir == ZTSwipeCellDirectionLeft && (action || (!action && translation.x >= (img.size.width + 2 * self.imageMargin)))) {
             tmp.origin.x = rect.origin.x - self.imageMargin - img.size.width;
+            self.sliderImageView.alpha = 1;
+        }
+        else if(dir == ZTSwipeCellDirectionRight && (action || (!action && translation.x <= -(img.size.width + 2 * self.imageMargin)))) {
+            tmp.origin.x = rect.origin.x + rect.size.width + self.imageMargin;
             self.sliderImageView.alpha = 1;
         }
         else if(dir == ZTSwipeCellDirectionLeft && !action && translation.x < (img.size.width + 2 * self.imageMargin)) {
@@ -215,9 +222,10 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
             self.sliderImageView.alpha = MIN(translation.x / (2 * self.imageMargin + img.size.width), 1);
         }
         else if(dir == ZTSwipeCellDirectionRight && !action && translation.x > -(img.size.width + 2 * self.imageMargin)) {
-            tmp.origin.x = self.sliderBackgroundView.frame.size.width - (self.imageMargin + img.size.width);
-            self.sliderImageView.alpha = MIN(translation.x / (2 * self.imageMargin + img.size.width), 1);
+            tmp.origin.x = rect.size.width - (self.imageMargin + img.size.width);
+            self.sliderImageView.alpha = MIN(-translation.x / (2 * self.imageMargin + img.size.width), 1);
         }
+        
         self.sliderImageView.frame = tmp;
         NSLog(@"%@", NSStringFromCGRect(rect));
     }
@@ -253,7 +261,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 - (void)triggerAction:(ZTSwipeCellAction *)action
 {
     [self tryNotifyDelagateDidEndSwipeSuccess:YES];
-    [self tryNotifyDelagateWillTriggerAction:action];
+        [self tryNotifyDelagateWillTriggerAction:action];
     [self animateAction:action completion:^(BOOL finished) {
         [self tryNotifyDelagateDidTriggerAction:action];
     }];
@@ -271,9 +279,12 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 {
     self.panGestureRecognizer.enabled = NO;
     ZTSwipeCellMode mode = action ? action.mode : ZTSwipeCellModeSwitch;
+    UIViewAnimationOptions curve = mode == ZTSwipeCellModeExit ? UIViewAnimationOptionCurveLinear : UIViewAnimationOptionCurveEaseOut;
     if(mode != ZTSwipeCellModeSwitchWithBounce) {
         [UIView
          animateWithDuration:self.animationDuration
+         delay:0
+         options:curve
          animations:^{
              if(mode == ZTSwipeCellModeSwitch) {
                  self.sliderView.frame = self.originalFrame;
@@ -284,13 +295,24 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
                  }
              }
              else {
+                 CGRect imgRect = self.sliderImageView.frame;
                  CGRect rect = self.sliderView.frame;
-                 rect.origin.x = rect.size.width;
+                 if(action.direction == ZTSwipeCellDirectionLeft) {
+                     rect.origin.x = rect.size.width + (action.image ? action.image.size.width + self.imageMargin : 0);
+                     imgRect.origin.x = rect.size.width;
+                 }
+                 else {
+                     rect.origin.x = -rect.size.width - (action.image ? action.image.size.width + self.imageMargin : 0);
+                     imgRect.origin.x = action.image ? -action.image.size.width : 0;
+                 }
                  self.sliderView.frame = rect;
+                 self.sliderImageView.frame = imgRect;
              }
          }
          completion:^(BOOL finished) {
              self.panGestureRecognizer.enabled = YES;
+             self.sliderView.hidden = YES;
+             self.sliderView.frame = self.originalFrame;
              if(callback)
                  callback(finished);
          }];
