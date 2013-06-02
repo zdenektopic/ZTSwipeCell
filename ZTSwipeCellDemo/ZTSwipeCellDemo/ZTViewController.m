@@ -91,7 +91,7 @@
                                   mode:ZTSwipeCellModeSwitch
                                   tag:nil];
     
-    [cell addAction:action];
+    //[cell addAction:action];
     [cell addAction:action1];
     [cell addAction:action2];
     [cell addAction:action3];

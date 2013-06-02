@@ -94,7 +94,7 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
     self.current = nil;
     self.innerEdgeBehavior = ZTSwipeCellEdgeBehaviorElastic;
     self.outerEdgeBehavior = ZTSwipeCellEdgeBehaviorNone;
-    self.animationDuration = .5f;
+    self.animationDuration = .2f;
     self.imageMargin = 20;
     self.switchMode = ZTSwipeCellSwitchModeOrigin;
     self.overrideCancelWithEnd = NO;
@@ -418,14 +418,12 @@ typedef void (^ZTSwipeCellAnimationCallback)(BOOL finished);
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (gestureRecognizer == _panGestureRecognizer) {
-        UIScrollView *superview = (UIScrollView *) self.superview;
-        CGPoint translation = [(UIPanGestureRecognizer *) gestureRecognizer translationInView:superview];
-        
-        // Make sure it is scrolling horizontally
-        return ((fabsf(translation.x) / fabsf(translation.y) > 1) ? YES : NO && (superview.contentOffset.y == 0.0 && superview.contentOffset.x == 0.0));
+    if (gestureRecognizer.class == [UIPanGestureRecognizer class]) {
+        UIPanGestureRecognizer *g = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint point = [g velocityInView:self];
+        return fabsf(point.x) > fabsf(point.y);
     }
-    return NO;
+    return YES;
 }
 
 #pragma mark - Managing actions
